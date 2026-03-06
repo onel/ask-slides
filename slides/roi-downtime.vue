@@ -78,7 +78,7 @@
 <script>
 export default {
   data() {
-    return { costPerHour: 5000, hoursBefore: 4, incidents: 6 }
+    return { costPerHour: 3000, hoursBefore: 4, incidents: 4 }
   },
   computed: {
     hoursAfter() { return Math.max(1, Math.round(this.hoursBefore / 3)) },
