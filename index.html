@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>askmanu - Pitch Deck</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Instrument Serif"', 'serif'],
+            sans: ['Inter', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            olive: {
+              50: 'oklch(98.8% 0.003 106.5)',
+              100: 'oklch(96.6% 0.005 106.5)',
+              200: 'oklch(93% 0.007 106.5)',
+              300: 'oklch(88% 0.011 106.6)',
+              400: 'oklch(73.7% 0.021 106.9)',
+              500: 'oklch(58% 0.031 107.3)',
+              600: 'oklch(46.6% 0.025 107.3)',
+              700: 'oklch(39.4% 0.023 107.4)',
+              800: 'oklch(28.6% 0.016 107.4)',
+              900: 'oklch(22.8% 0.013 107.4)',
+              950: 'oklch(15.3% 0.006 107.1)',
+            },
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    .slide { display: none; }
+    .slide.active { display: flex; }
+    [v-cloak] { display: none; }
+  </style>
+</head>
+<body class="bg-olive-100 text-olive-950 font-sans">
+
+<div id="app" v-cloak>
+  <!-- Progress bar -->
+  <div class="fixed top-0 left-0 right-0 z-50 h-1 bg-olive-200">
+    <div class="h-full bg-olive-600 transition-all duration-300" :style="{ width: ((currentSlide + 1) / slides.length * 100) + '%' }"></div>
+  </div>
+
+  <!-- Slide counter -->
+  <div class="fixed bottom-6 right-8 z-50 text-sm text-olive-400 font-mono">
+    {{ currentSlide + 1 }} / {{ slides.length }}
+  </div>
+
+  <!-- Navigation arrows -->
+  <button @click="prev" v-show="currentSlide > 0" class="fixed left-6 top-1/2 -translate-y-1/2 z-50 w-10 h-10 rounded-full bg-olive-200 hover:bg-olive-300 flex items-center justify-center text-olive-600 transition-colors">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M15 19l-7-7 7-7"/></svg>
+  </button>
+  <button @click="next" v-show="currentSlide < slides.length - 1" class="fixed right-6 top-1/2 -translate-y-1/2 z-50 w-10 h-10 rounded-full bg-olive-200 hover:bg-olive-300 flex items-center justify-center text-olive-600 transition-colors">
+    <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7"/></svg>
+  </button>
+
+  <!-- Slides container -->
+  <div v-for="(slide, index) in slides" :key="slide" class="slide min-h-screen flex-col items-center justify-center px-8" :class="{ active: index === currentSlide }">
+    <div class="w-full max-w-5xl mx-auto">
+      <roi-calculator v-if="slide === 'slides/roi-onboarding.html' && index === currentSlide"></roi-calculator>
+      <div v-else v-html="slideContents[slide]"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script>
+// ============================================================
+// SLIDE CONFIGURATION
+// Comment/uncomment lines to toggle slides.
+// Reorder lines to change slide order.
+// ============================================================
+const SLIDES = [
+  'slides/title.html',
+  'slides/team.html',
+  'slides/problem.html',
+  'slides/solution.html',
+  'slides/how-it-works.html',
+  'slides/features.html',
+  'slides/roi-onboarding.html',
+  'slides/demo.html',
+  'slides/case-nvidia.html',
+  'slides/cta.html',
+  // --- Add customer-specific slides below ---
+  // 'slides/case-study-huggingface.html',
+  // 'slides/enterprise-security.html',
+  // 'slides/pricing.html',
+]
+
+const { createApp } = Vue
+
+const RoiCalculator = {
+  template: `
+<div class="py-16">
+  <p class="text-sm font-semibold uppercase tracking-widest text-olive-400 mb-4">ROI</p>
+  <h2 class="font-display text-5xl md:text-6xl text-olive-950 mb-6">Better docs, faster onboarding.</h2>
+  <p class="text-xl text-olive-600 max-w-2xl leading-relaxed mb-10">
+    Up-to-date documentation means new developers find answers instead of asking around. Adjust the numbers to match your team.
+  </p>
+
+  <!-- Sliders -->
+  <div class="grid md:grid-cols-3 gap-6 mb-10">
+    <div class="bg-olive-50 rounded-xl p-6 border border-olive-200">
+      <label class="text-sm font-semibold text-olive-700 block mb-2">Monthly salary</label>
+      <input type="range" v-model.number="salary" min="2000" max="15000" step="1000"
+        class="w-full accent-olive-600" @mousedown.stop @keydown.stop />
+      <div class="text-2xl font-semibold text-olive-950 mt-2">&euro;{{ salary.toLocaleString() }}<span class="text-sm font-normal text-olive-400">/mo</span></div>
+    </div>
+    <div class="bg-olive-50 rounded-xl p-6 border border-olive-200">
+      <label class="text-sm font-semibold text-olive-700 block mb-2">Current onboarding</label>
+      <input type="range" v-model.number="weeksBefore" min="2" max="12" step="1"
+        class="w-full accent-olive-600" @mousedown.stop @keydown.stop />
+      <div class="text-2xl font-semibold text-olive-950 mt-2">{{ weeksBefore }} weeks</div>
+    </div>
+    <div class="bg-olive-50 rounded-xl p-6 border border-olive-200">
+      <label class="text-sm font-semibold text-olive-700 block mb-2">New hires per year</label>
+      <input type="range" v-model.number="devs" min="1" max="50" step="1"
+        class="w-full accent-olive-600" @mousedown.stop @keydown.stop />
+      <div class="text-2xl font-semibold text-olive-950 mt-2">{{ devs }} developer{{ devs > 1 ? 's' : '' }}</div>
+    </div>
+  </div>
+
+  <!-- Comparison -->
+  <div class="grid md:grid-cols-2 gap-8 mb-10">
+    <div class="bg-olive-950 rounded-2xl p-8 text-olive-100">
+      <h3 class="font-display text-2xl mb-4">Without askmanu</h3>
+      <div class="space-y-3 text-olive-300">
+        <div class="flex justify-between border-b border-olive-800 pb-2">
+          <span>Onboarding time</span>
+          <span class="font-semibold text-olive-100">{{ weeksBefore }} weeks</span>
+        </div>
+        <div class="flex justify-between border-b border-olive-800 pb-2">
+          <span>Cost per hire</span>
+          <span class="font-semibold text-olive-100">&euro;{{ costBefore.toLocaleString() }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Total ({{ devs }} hire{{ devs > 1 ? 's' : '' }})</span>
+          <span class="font-semibold text-red-400">&euro;{{ totalBefore.toLocaleString() }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="bg-olive-50 rounded-2xl p-8 border border-olive-200">
+      <h3 class="font-display text-2xl text-olive-950 mb-4">With askmanu</h3>
+      <div class="space-y-3 text-olive-700">
+        <div class="flex justify-between border-b border-olive-200 pb-2">
+          <span>Onboarding time</span>
+          <span class="font-semibold text-olive-950">{{ weeksAfter }} weeks</span>
+        </div>
+        <div class="flex justify-between border-b border-olive-200 pb-2">
+          <span>Cost per hire</span>
+          <span class="font-semibold text-olive-950">&euro;{{ costAfter.toLocaleString() }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Total ({{ devs }} hire{{ devs > 1 ? 's' : '' }})</span>
+          <span class="font-semibold text-green-700">&euro;{{ totalAfter.toLocaleString() }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Savings -->
+  <div class="bg-olive-200 rounded-2xl p-8 text-center">
+    <p class="text-olive-600 text-lg mb-2">Annual savings from onboarding alone</p>
+    <p class="font-display text-6xl text-olive-950">&euro;{{ totalSaved.toLocaleString() }}</p>
+    <p class="text-olive-500 mt-3 text-sm">{{ weeksBefore - weeksAfter }} fewer weeks per developer &times; {{ devs }} hire{{ devs > 1 ? 's' : '' }}/year</p>
+  </div>
+</div>
+  `,
+  data() {
+    return { salary: 5000, weeksBefore: 6, devs: 5 }
+  },
+  computed: {
+    weeksAfter() { return Math.max(1, Math.round(this.weeksBefore / 3)) },
+    costBefore() { return Math.round(this.salary * this.weeksBefore / 4) },
+    costAfter() { return Math.round(this.salary * this.weeksAfter / 4) },
+    totalBefore() { return this.costBefore * this.devs },
+    totalAfter() { return this.costAfter * this.devs },
+    totalSaved() { return this.totalBefore - this.totalAfter },
+  },
+}
+
+const app = createApp({
+  data() {
+    return {
+      currentSlide: 0,
+      slides: SLIDES,
+      slideContents: {},
+    }
+  },
+  async mounted() {
+    // Load all slide HTML files
+    const entries = await Promise.all(
+      this.slides.map(async (path) => {
+        try {
+          const res = await fetch(path)
+          return [path, await res.text()]
+        } catch {
+          return [path, `<p class="text-red-500">Failed to load ${path}</p>`]
+        }
+      })
+    )
+    this.slideContents = Object.fromEntries(entries)
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); this.next() }
+      if (e.key === 'ArrowLeft') { e.preventDefault(); this.prev() }
+      if (e.key === 'Home') { e.preventDefault(); this.currentSlide = 0 }
+      if (e.key === 'End') { e.preventDefault(); this.currentSlide = this.slides.length - 1 }
+    })
+  },
+  methods: {
+    next() { if (this.currentSlide < this.slides.length - 1) this.currentSlide++ },
+    prev() { if (this.currentSlide > 0) this.currentSlide-- },
+  },
+})
+app.component('roi-calculator', RoiCalculator)
+app.mount('#app')
+</script>
+
+</body>
+</html>
