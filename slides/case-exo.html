@@ -1,0 +1,68 @@
+<div class="py-16">
+  <p class="text-sm font-semibold uppercase tracking-widest text-olive-400 mb-4">Case Study</p>
+  <div class="flex items-center gap-5 mb-4">
+    <h2 class="font-display text-5xl md:text-6xl text-olive-950">exo</h2>
+  </div>
+  <p class="text-xl text-olive-600 max-w-3xl leading-relaxed mb-14">
+    v1.0.68 &mdash; the biggest exo release to date &mdash; shipped with Claude API support, Ollama compatibility, and a redesigned dashboard. askmanu documented it all across 4 files in a single PR cycle.
+  </p>
+
+  <!-- Workflow timeline -->
+  <div class="grid md:grid-cols-3 gap-6 mb-12">
+    <div class="bg-olive-50 rounded-2xl p-8 border border-olive-200 relative">
+      <div class="absolute -top-3 left-6 bg-olive-950 text-olive-100 text-xs font-semibold px-3 py-1 rounded-full">Release</div>
+      <h3 class="text-lg font-semibold text-olive-900 mt-2 mb-2">v1.0.68 published</h3>
+      <p class="text-olive-600 text-sm leading-relaxed">New APIs, custom model support, stability fixes, security improvements, and more.</p>
+      <a href="https://github.com/exo-explore/exo/releases/tag/v1.0.68" target="_blank" class="inline-flex items-center gap-1 text-xs text-olive-400 hover:text-olive-600 mt-3">
+        View release
+        <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+      </a>
+    </div>
+
+    <div class="bg-olive-50 rounded-2xl p-8 border border-olive-200 relative">
+      <div class="absolute -top-3 left-6 bg-olive-950 text-olive-100 text-xs font-semibold px-3 py-1 rounded-full">Issue + PR</div>
+      <h3 class="text-lg font-semibold text-olive-900 mt-2 mb-2">Plan created, PR submitted</h3>
+      <p class="text-olive-600 text-sm leading-relaxed">4 files updated: api.md, README.md, CONTRIBUTING.md.</p>
+      <p class="text-olive-600 text-sm leading-relaxed">architecture.md. New endpoints, env vars, model cards, and adapter patterns.</p>
+      <div class="flex gap-3 mt-3">
+        <a href="https://github.com/exo-explore/exo/issues/1653" target="_blank" class="inline-flex items-center gap-1 text-xs text-olive-400 hover:text-olive-600">
+          Issue #1653
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </a>
+        <a href="https://github.com/exo-explore/exo/pull/1667" target="_blank" class="inline-flex items-center gap-1 text-xs text-olive-400 hover:text-olive-600">
+          PR #1667
+          <svg class="w-3 h-3" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25"/></svg>
+        </a>
+      </div>
+    </div>
+
+    <div class="bg-olive-50 rounded-2xl p-8 border border-olive-200 relative">
+      <div class="absolute -top-3 left-6 bg-olive-950 text-olive-100 text-xs font-semibold px-3 py-1 rounded-full">Merged</div>
+      <h3 class="text-lg font-semibold text-olive-900 mt-2 mb-2">Reviewed & merged</h3>
+      <p class="text-olive-600 text-sm leading-relaxed">exo maintainer requested minor changes on architecture docs, askmanu addressed them, PR approved and merged.</p>
+    </div>
+  </div>
+
+  <!-- What was documented -->
+  <div class="bg-olive-950 rounded-2xl p-8 text-olive-100">
+    <h3 class="font-display text-xl mb-4 text-olive-300">What askmanu documented</h3>
+    <div class="grid md:grid-cols-4 gap-4 text-sm">
+      <div>
+        <p class="font-semibold text-olive-100 mb-1">api.md</p>
+        <p class="text-olive-400">Claude, OpenAI, Ollama endpoints, streaming formats, usage stats</p>
+      </div>
+      <div>
+        <p class="font-semibold text-olive-100 mb-1">README.md</p>
+        <p class="text-olive-400">Environment variables, security notes, usage examples</p>
+      </div>
+      <div>
+        <p class="font-semibold text-olive-100 mb-1">CONTRIBUTING.md</p>
+        <p class="text-olive-400">TOML model card format, required fields</p>
+      </div>
+      <div>
+        <p class="font-semibold text-olive-100 mb-1">architecture.md</p>
+        <p class="text-olive-400">Adapter pattern, API-to-internal type mapping</p>
+      </div>
+    </div>
+  </div>
+</div>
